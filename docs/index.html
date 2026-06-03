@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PAR3D: A Unified 3D-MLLM with Part-Aware Representation for Scene Understanding" />
+  <title>PAR3D: A Unified 3D-MLLM with Part-Aware Representation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-inner">
+      <p class="venue">Project Page</p>
+      <h1>PAR3D: A Unified 3D-MLLM with Part-Aware Representation for Scene Understanding</h1>
+
+      <div class="authors" aria-label="Authors">
+        <span class="author"><span class="author-name">Shaohui Dai</span><sup>1,*</sup></span>
+        <span class="author"><span class="author-name">Yansong Qu</span><sup>1,*,†</sup></span>
+        <span class="author"><span class="author-name">You Shen</span><sup>1</sup></span>
+        <span class="author"><span class="author-name">Shengchuan Zhang</span><sup>1</sup></span>
+        <span class="author"><span class="author-name">Miaohui Zhang</span><sup>2</sup></span>
+        <span class="author"><span class="author-name">Liujuan Cao</span><sup>1,‡</sup></span>
+      </div>
+
+      <div class="affiliations">
+        <p><sup>1</sup> Key Laboratory of Multimedia Trusted Perception and Efficient Computing,<br> Ministry of Education of China, Xiamen University</p>
+        <p><sup>2</sup> Institute of Materials and Intelligent Manufacturing, Jiangxi Academy of Sciences</p>
+        <p class="notes"><sup>*</sup> Equal contribution.&nbsp;&nbsp; <sup>†</sup> Project lead.&nbsp;&nbsp; <sup>‡</sup> Corresponding author.</p>
+      </div>
+
+      <nav class="hero-actions" aria-label="Project links">
+        <a class="button" href="PAR3D__arxiv___CR/PAR3D__arxiv___CR.pdf">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 2.75h8.15L20 8.6v12.65H6V2.75Zm7.25 1.7v5.05h5.05L13.25 4.45ZM8 11.5v1.6h8v-1.6H8Zm0 3.4v1.6h8v-1.6H8Zm0 3.4v1.6h5.6v-1.6H8Z" /></svg>
+          Paper
+        </a>
+        <a class="button muted" href="#" aria-disabled="true">
+          <i class="ai ai-arxiv" aria-hidden="true"></i>
+          arXiv <span>Coming soon</span>
+        </a>
+        <a class="button muted" href="#" aria-disabled="true">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .9a11.1 11.1 0 0 0-3.5 21.64c.55.1.75-.24.75-.53v-2.05c-3.05.66-3.7-1.3-3.7-1.3-.5-1.27-1.22-1.61-1.22-1.61-.99-.68.08-.67.08-.67 1.1.08 1.68 1.14 1.68 1.14.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.47-2.43-.28-4.99-1.22-4.99-5.42 0-1.2.43-2.17 1.13-2.94-.11-.28-.49-1.4.11-2.9 0 0 .93-.3 3.04 1.12a10.5 10.5 0 0 1 5.54 0c2.11-1.42 3.03-1.12 3.03-1.12.6 1.5.22 2.62.11 2.9.7.77 1.13 1.74 1.13 2.94 0 4.21-2.57 5.13-5.01 5.4.39.35.74 1.02.74 2.05v3.04c0 .29.2.64.76.53A11.1 11.1 0 0 0 12 .9Z" /></svg>
+          Code <span>Coming soon</span>
+        </a>
+        <a class="button muted" href="#" aria-disabled="true">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5 3.5 7v10L12 21.5 20.5 17V7L12 2.5Zm0 2.25L16.95 7 12 9.25 7.05 7 12 4.75ZM5.5 8.6l5.5 2.5v7.4L5.5 15.6v-7Zm13 7-5.5 2.9v-7.4l5.5-2.5v7Z" /></svg>
+          Data <span>Coming soon</span>
+        </a>
+      </nav>
+
+      <figure class="teaser card">
+        <img src="assets/images/teaser.png" alt="PAR3D teaser figure" />
+        <figcaption>
+          PAR3D enables part-aware understanding across question answering, segmentation, and reasoning, going beyond object-level 3D-MLLMs.
+        </figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main>
+    <section class="section compact">
+      <div class="container narrow">
+        <h2>TL;DR</h2>
+        <p class="tldr">
+          PAR3D is a unified part-aware 3D-MLLM that understands, reasons about, and grounds both objects and their fine-grained parts in 3D scenes.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
+        <h2>Abstract</h2>
+        <p>
+          Recent advances in 3D multimodal large language models (3D-MLLMs) have enabled unified solutions for 3D scene understanding tasks, including visual question answering, captioning, and referring segmentation. However, existing 3D-MLLMs remain largely object-centric, limiting their ability to model fine-grained part structures that are essential for embodied interaction with 3D environments.
+        </p>
+        <p>
+          In this work, we present <strong>PAR3D</strong>, a unified part-aware 3D-MLLM framework that enables models to understand, reason about, and ground both objects and their parts in 3D scenes. To enable training and evaluation of part-aware 3D scene understanding, we introduce <strong>ScenePart</strong>, a synthetic 3D scene dataset with part-level annotations and language instructions. We further develop Part-Aware 3D Representation Learning to enrich 3D visual representations with fine-grained part-level semantics, and propose Hierarchical Segmentation Query Generation to ground part targets via hierarchical object-part queries.
+        </p>
+        <p>
+          Extensive experiments show that PAR3D substantially improves part-level question answering and referring segmentation, while also achieving strong performance across object-level vision-language tasks.
+        </p>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Dataset</p>
+          <h2>ScenePart: Part-Level 3D Scene Dataset</h2>
+          <p>
+            ScenePart composes part-annotated 3D objects into synthesized indoor layouts, producing object- and part-level mask annotations in 3D scenes and multi-task language instructions for training and evaluating part-aware 3D-MLLMs.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><strong>800</strong><span>scenes</span></div>
+          <div class="stat-card"><strong>21K</strong><span>object masks</span></div>
+          <div class="stat-card"><strong>44K</strong><span>part masks</span></div>
+          <div class="stat-card"><strong>273K</strong><span>language annotations</span></div>
+        </div>
+
+        <figure class="paper-figure card">
+          <img src="assets/images/data_pipeline.png" alt="ScenePart data construction pipeline" />
+          <figcaption>
+            ScenePart provides object masks, part masks, object-part correspondences, scene context, and language-task annotations.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>PAR3D Framework</h2>
+          <p>
+            PAR3D supports diverse 3D vision-language tasks over both objects and their parts through scene-level part supervision, part-aware representation learning, and hierarchical segmentation queries.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span>01</span>
+            <h3>ScenePart Supervision</h3>
+            <p>Object- and part-level masks with object-part correspondences provide dense supervision in complete 3D scenes.</p>
+          </article>
+          <article class="feature-card">
+            <span>02</span>
+            <h3>Part-Aware Representation Learning</h3>
+            <p>Part-aware contrastive learning and representation-preserving regularization enrich visual features with fine-grained part semantics.</p>
+          </article>
+          <article class="feature-card">
+            <span>03</span>
+            <h3>Hierarchical Segmentation Queries</h3>
+            <p>Granularity-aware grounding tokens distinguish object-level and part-level targets for unified textual response and mask prediction.</p>
+          </article>
+        </div>
+
+        <figure class="paper-figure card">
+          <img src="assets/images/pipeline.png" alt="PAR3D framework pipeline" />
+          <figcaption>
+            PAR3D is trained in two stages and generates textual responses as well as object or part masks through hierarchical grounding tokens.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section alt results-section">
+      <div class="container wide-container">
+        <div class="section-heading">
+          <p class="eyebrow">Results</p>
+          <h2>Quantitative Results</h2>
+          <p>
+            PAR3D improves both object-level 3D vision-language performance and part-aware scene understanding across referring segmentation, question answering, and dense captioning benchmarks.
+          </p>
+        </div>
+
+        <div class="result-grid">
+          <figure class="paper-figure image-card table-figure card">
+            <h3>Object-Level Benchmarks</h3>
+            <img src="assets/images/table1-object-benchmarks.png" alt="Quantitative comparison on object-level benchmarks" />
+            <figcaption>
+              PAR3D achieves strong object-level performance across 3D referring segmentation, question answering, and dense captioning benchmarks while operating as a unified generalist 3D-MLLM.
+            </figcaption>
+          </figure>
+
+          <figure class="paper-figure image-card table-figure card">
+            <h3>ScenePart Benchmark</h3>
+            <img src="assets/images/table2-scenepart-benchmark.png" alt="Quantitative comparison on the ScenePart benchmark" />
+            <figcaption>
+              PAR3D consistently improves object- and part-level referring segmentation and part-aware question answering on ScenePart, covering object, coarse-part, and fine-part granularities.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Qualitative Results</p>
+          <h2>Part-Aware 3D Scene Understanding</h2>
+          <p>
+            PAR3D demonstrates fine-grained object-part grounding and part-aware reasoning in real and synthetic 3D scenes.
+          </p>
+        </div>
+
+        <div class="result-grid">
+          <figure class="paper-figure image-card card">
+            <h3>Part-Aware Referring Segmentation and Question Answering</h3>
+            <img src="assets/images/qualitative.png" alt="Part-aware referring segmentation and question answering examples" />
+            <figcaption>
+              PAR3D handles part-aware instructions on real 3D scans. Blue masks indicate object-level predictions, while red masks indicate part-level predictions, highlighting simultaneous object-part grounding.
+            </figcaption>
+          </figure>
+
+          <figure class="paper-figure image-card card">
+            <h3>Additional Visual Question Answering Comparisons</h3>
+            <img src="assets/images/expt_more_qa.png" alt="Additional visual question answering comparisons" />
+            <figcaption>
+              Additional examples from ScanQA and ScenePart-QA show that PAR3D provides more accurate answers for questions involving object attributes, object parts, spatial relationships, and scene-level context.
+            </figcaption>
+          </figure>
+
+          <figure class="paper-figure image-card card">
+            <h3>Additional Referring Segmentation Comparisons</h3>
+            <img src="assets/images/expt_more_refer.png" alt="Additional referring segmentation comparisons" />
+            <figcaption>
+              Additional examples from ScanRefer, Multi3DRefer, and ScenePart-Seg show more accurate referring segmentation across object and part targets. Blue denotes the final target mask for both object-level and part-level segmentation.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container narrow">
+        <h2>Citation</h2>
+        <p>If you find PAR3D useful for your research, please consider citing our work.</p>
+        <pre class="bibtex"><code>@article{dai2026par3d,
+  title={PAR3D: A Unified 3D-MLLM with Part-Aware Representation for Scene Understanding},
+  author={Dai, Shaohui and Qu, Yansong and Shen, You and Zhang, Shengchuan and Zhang, Miaohui and Cao, Liujuan},
+  journal={arXiv preprint},
+  year={2026}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>This website is inspired by the GOI and Nerfies project pages.</p>
+    </div>
+  </footer>
+</body>
+</html>
