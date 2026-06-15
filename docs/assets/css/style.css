@@ -474,6 +474,218 @@ tr.ours td {
   margin: 0;
 }
 
+/* Interactive QA figure */
+.qa-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+  /* shrink the grid */
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.qa-hint {
+  margin: 8px auto 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.qa-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.qa-viewer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 50% 36%, #ffffff, #eef2f7 82%);
+  cursor: grab;
+  touch-action: none;
+}
+
+.qa-viewer:active {
+  cursor: grabbing;
+}
+
+.qa-viewer.pcd-loaded::before,
+.qa-viewer.pcd-error::before {
+  display: none;
+}
+
+.qa-viewer::before {
+  content: "Loading point cloud…";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.qa-viewer.pcd-fallback img {
+  border-radius: 0;
+}
+
+.qa-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 16px 18px;
+}
+
+.qa-tag {
+  align-self: flex-start;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.qa-question {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.qa-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qa-answer {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.qa-answer .qa-who {
+  margin-right: 6px;
+  font-weight: 800;
+}
+
+.qa-answer.is-gt {
+  color: #0f5d54;
+}
+
+.qa-answer.is-gt .qa-who {
+  color: var(--accent);
+}
+
+.qa-answer.is-baseline {
+  color: var(--muted);
+}
+
+.qa-answer.is-baseline .qa-who {
+  color: #8492a6;
+}
+
+.qa-answer.is-ours {
+  color: #102d44;
+  font-weight: 600;
+}
+
+.qa-answer.is-ours .qa-who {
+  color: var(--primary-dark);
+}
+
+/* Referring-segmentation figure: one row per scene, four synced columns */
+.refer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  margin-top: 24px;
+  /* shrink the grid */
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.refer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.refer-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.refer-tag {
+  flex: 0 0 auto;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.refer-quote {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.refer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.refer-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.refer-col-label {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.refer-viewer {
+  aspect-ratio: 1.41 / 1;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+@media (max-width: 860px) {
+  .qa-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .refer-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 860px) {
   .hero {
     padding-top: 42px;

@@ -10,6 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body>
   <header class="hero">
@@ -197,7 +205,12 @@
 
           <figure class="paper-figure image-card card">
             <h3>Additional Visual Question Answering Comparisons</h3>
-            <img src="assets/images/expt_more_qa.png" alt="Additional visual question answering comparisons" />
+            <p class="qa-hint">Each scene below is a live 3D point cloud. Drag to rotate, scroll to zoom.</p>
+            <div id="qa-grid" class="qa-grid">
+              <noscript>
+                <img src="assets/images/expt_more_qa.png" alt="Additional visual question answering comparisons" />
+              </noscript>
+            </div>
             <figcaption>
               Additional examples from ScanQA and ScenePart-QA show that PAR3D provides more accurate answers for questions involving object attributes, object parts, spatial relationships, and scene-level context.
             </figcaption>
@@ -205,7 +218,12 @@
 
           <figure class="paper-figure image-card card">
             <h3>Additional Referring Segmentation Comparisons</h3>
-            <img src="assets/images/expt_more_refer.png" alt="Additional referring segmentation comparisons" />
+            <p class="qa-hint">Each row is one live 3D scene. Drag any panel to rotate; the rest of the row follows once you release.</p>
+            <div id="refer-grid" class="refer-grid">
+              <noscript>
+                <img src="assets/images/expt_more_refer.png" alt="Additional referring segmentation comparisons" />
+              </noscript>
+            </div>
             <figcaption>
               Additional examples from ScanRefer, Multi3DRefer, and ScenePart-Seg show more accurate referring segmentation across object and part targets. Blue denotes the final target mask for both object-level and part-level segmentation.
             </figcaption>
@@ -233,5 +251,143 @@
       <p>This website is inspired by the GOI and Nerfies project pages.</p>
     </div>
   </footer>
+
+  <script type="module">
+    import { initPointClouds } from "./assets/js/pcd-viewer.js";
+    import {
+      qaExamples,
+      POINTCLOUD_BASE_QA,
+      referExamples,
+      POINTCLOUD_BASE_REFER,
+      REFER_COLUMNS,
+    } from "./assets/js/figures-config.js";
+
+    const grid = document.getElementById("qa-grid");
+    if (grid) {
+      const cellConfigs = [];
+      for (const ex of qaExamples) {
+        const card = document.createElement("div");
+        card.className = "qa-card card";
+
+        const viewer = document.createElement("div");
+        viewer.className = "qa-viewer";
+        viewer.setAttribute("aria-label", ex.dataset + " 3D scene");
+
+        const body = document.createElement("div");
+        body.className = "qa-body";
+
+        const tag = document.createElement("span");
+        tag.className = "qa-tag";
+        tag.textContent = ex.dataset;
+
+        const question = document.createElement("p");
+        question.className = "qa-question";
+        question.textContent = ex.question;
+
+        const answers = document.createElement("div");
+        answers.className = "qa-answers";
+
+        const gt = document.createElement("p");
+        gt.className = "qa-answer is-gt";
+        gt.innerHTML =
+          '<span class="qa-who">GT</span><span>' +
+          escapeHtml(ex.gt) +
+          "</span>";
+
+        const baseline = document.createElement("p");
+        baseline.className = "qa-answer is-baseline";
+        baseline.innerHTML =
+          '<span class="qa-who">3D-LLaVA</span><span>' +
+          escapeHtml(ex.llava) +
+          "</span>";
+
+        const ours = document.createElement("p");
+        ours.className = "qa-answer is-ours";
+        ours.innerHTML =
+          '<span class="qa-who">PAR3D</span><span>' +
+          escapeHtml(ex.par3d) +
+          "</span>";
+
+        answers.appendChild(gt);
+        answers.appendChild(baseline);
+        answers.appendChild(ours);
+        body.appendChild(tag);
+        body.appendChild(question);
+        body.appendChild(answers);
+        card.appendChild(viewer);
+        card.appendChild(body);
+        grid.appendChild(card);
+
+        cellConfigs.push({
+          element: viewer,
+          url: POINTCLOUD_BASE_QA + ex.cloud,
+          view: ex.view,
+          pointSize: ex.pointSize,
+          alt: ex.dataset + " scene",
+          fallbackImage: "assets/images/expt_more_qa.png",
+        });
+      }
+      initPointClouds(cellConfigs);
+    }
+
+    const referGrid = document.getElementById("refer-grid");
+    if (referGrid) {
+      const referConfigs = [];
+      for (const ex of referExamples) {
+        const rowEl = document.createElement("div");
+        rowEl.className = "refer-row";
+
+        const prompt = document.createElement("p");
+        prompt.className = "refer-prompt";
+        prompt.innerHTML =
+          '<span class="refer-tag">' +
+          escapeHtml(ex.dataset) +
+          '</span><span class="refer-quote">' +
+          escapeHtml(ex.prompt) +
+          "</span>";
+
+        const cols = document.createElement("div");
+        cols.className = "refer-cols";
+
+        for (const col of REFER_COLUMNS) {
+          const cell = document.createElement("div");
+          cell.className = "refer-cell";
+
+          const label = document.createElement("span");
+          label.className = "refer-col-label";
+          label.textContent = col.label;
+
+          const viewer = document.createElement("div");
+          viewer.className = "qa-viewer refer-viewer";
+          viewer.setAttribute("aria-label", col.label + " — " + ex.dataset);
+
+          cell.appendChild(label);
+          cell.appendChild(viewer);
+          cols.appendChild(cell);
+
+          referConfigs.push({
+            element: viewer,
+            url: POINTCLOUD_BASE_REFER + "row" + ex.row + "_" + col.role + ".ply",
+            view: ex.view,
+            pointSize: ex.pointSize,
+            syncGroup: ex.id,
+            alt: col.label + " scene",
+            fallbackImage: "assets/images/expt_more_refer.png",
+          });
+        }
+
+        rowEl.appendChild(prompt);
+        rowEl.appendChild(cols);
+        referGrid.appendChild(rowEl);
+      }
+      initPointClouds(referConfigs);
+    }
+
+    function escapeHtml(s) {
+      const div = document.createElement("div");
+      div.textContent = s;
+      return div.innerHTML;
+    }
+  </script>
 </body>
 </html>
